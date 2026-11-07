@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOC Threat Intelligence Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400,500,600,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-brand">
+            <h1>SecOps / Threat Intelligence Platform</h1>
+        </div>
+        <div class="topbar-status">
+            <span class="status-dot"></span>
+            <span class="status-text">API VirusTotal: Online</span>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Painel de Pesquisa</h3>
+            </div>
+            
+            <div class="search-box-widget">
+                <div class="form-group">
+                    <label>Tipo de IOC</label>
+                    <select id="iocType">
+                        <option value="ip">Endereço IP</option>
+                        <option value="domain">Domínio</option>
+                        <option value="hash">Hash SHA-256</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Alvo / Indicador</label>
+                    <input type="text" id="iocInput" placeholder="Ex: 139.59.164.251">
+                </div>
+                <button class="btn-action" onclick="executarAnalise()">Consultar Threat Intel</button>
+            </div>
+
+            <div class="recent-searches">
+                <h4>Consultas Recentes</h4>
+                <ul id="historyList">
+                    <li class="history-item text-muted">Nenhuma consulta recente</li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            
+            <div class="target-header-card">
+                <div class="target-meta">
+                    <span class="meta-label">Indicador Ativo Selecionado</span>
+                    <h2 id="displayTarget" class="target-title">Aguardando consulta...</h2>
+                </div>
+                <div class="target-badges">
+                    <span id="badgeRisk" class="badge badge-neutral">Status: Inativo</span>
+                    <span class="badge badge-tlp">TLP: AMBER</span>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                
+                <div class="widget col-span-2">
+                    <div class="widget-header">
+                        <h3>Estatísticas de Detecção (Engines)</h3>
+                        <span class="widget-subtitle">VirusTotal v3 Scanner</span>
+                    </div>
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <span class="stat-title">Maliciosos</span>
+                            <strong id="statMalicious" class="stat-value text-red">0</strong>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-title">Suspeitos</span>
+                            <strong id="statSuspicious" class="stat-value text-yellow">0</strong>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-title">Limpos / Inofensivos</span>
+                            <strong id="statHarmless" class="stat-value text-green">0</strong>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-title">Não Detectados</span>
+                            <strong id="statUndetected" class="stat-value text-muted">0</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>IOC Status & Context</h3>
+                    </div>
+                    <div class="meta-list">
+                        <div class="meta-row">
+                            <span>Severidade:</span>
+                            <strong id="metaSeverity">--</strong>
+                        </div>
+                        <div class="meta-row">
+                            <span>Reputação Score:</span>
+                            <strong id="metaReputation">--</strong>
+                        </div>
+                        <div class="meta-row">
+                            <span>Origem:</span>
+                            <strong>External Feed</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget col-span-3">
+                    <div class="widget-header">
+                        <h3>Detalhes e Resoluções Conhecidas</h3>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Parâmetro</th>
+                                    <th>Valor Analisado</th>
+                                    <th>Tipo de Risco</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Engine Engine Status</td>
+                                    <td id="tblTarget" class="font-mono">--</td>
+                                    <td><span id="tblRisk" class="badge badge-neutral">--</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Ambientes Virtuais
+.venv/
+venv/
+ENV/
+
+# Variáveis de Ambiente e Segredos
+.env
+
+# Banco de Dados Local
+data/history.db
+data/reports/
+
+# Arquivos de Sistema e Cache do Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+*.log
